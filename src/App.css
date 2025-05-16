@@ -1,1 +1,6 @@
 @import "tailwindcss";
+
+@theme{
+    --color-heading-blog:#2D2D2D;
+    --color-read-more:#2F2D2D;
+}

@@ -1,5 +1,5 @@
 import axios from "axios";
-const API_BASE_URL = "http://localhost:3000";
+export const API_BASE_URL = "http://localhost:3000";
 
 export const fetchAllProducts = async () => {
   try {
@@ -32,3 +32,26 @@ export const fetchAllCategories = async () => {
     throw error;
   }
 };
+
+// Return All Posts
+export const fetchAllPosts = async () => {
+  try {
+    const res = await axios.get(`${API_BASE_URL}/posts`);
+    return(res.data)
+  } catch (error) {
+    console.error("Error fetching posts:", error);
+    throw error;
+  }
+};
+export const fetchPostById = async (id) => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/posts/${id}`);
+    console.log(response)
+    return response.data; 
+
+  } catch (error) {
+    console.error("Error fetching product:", error);
+    throw error;
+  }
+};
+
