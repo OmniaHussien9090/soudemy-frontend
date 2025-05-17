@@ -9,6 +9,7 @@ export const useProducts = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedColors, setSelectedColors] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState([]);
+  const [selectedRatings, setSelectedRatings] = useState([]);
   const [colorOptions, setColorOptions] = useState([]);
   const [priceRange, setPriceRange] = useState({ min: 0, max: 1000 });
   const [sliderValues, setSliderValues] = useState({ min: 0, max: 1000 });
@@ -128,7 +129,15 @@ export const useProducts = () => {
         selectedCategories.length === 0 ||
         (variant.categoryId && selectedCategories.includes(variant.categoryId));
 
-      return matchesSearch && matchesColor && matchesPrice && matchesCategory;
+      const matchesRating =
+        selectedRatings.length === 0 ||
+        (variant.averageRating !== undefined &&
+          selectedRatings.some((rating) => {
+            const starValue = Math.round(variant.averageRating / 2.6);
+            return starValue === rating;
+          }));
+
+      return matchesSearch && matchesColor && matchesPrice && matchesCategory && matchesRating;
     })
   );
 
@@ -154,6 +163,16 @@ export const useProducts = () => {
       prev.includes(categoryId)
         ? prev.filter((c) => c !== categoryId)
         : [...prev, categoryId]
+    );
+    setCurrentPage(1);
+  };
+
+  // Rating filter handler
+  const handleRatingChange = (rating) => {
+    setSelectedRatings((prev) =>
+      prev.includes(rating)
+        ? prev.filter((r) => r !== rating)
+        : [...prev, rating]
     );
     setCurrentPage(1);
   };
@@ -214,6 +233,7 @@ export const useProducts = () => {
     setSearchTerm("");
     setSelectedColors([]);
     setSelectedCategories([]);
+    setSelectedRatings([]);
     setSliderValues({ min: priceRange.min, max: priceRange.max });
     setTempSliderValues({ min: priceRange.min, max: priceRange.max });
     setCurrentPage(1);
@@ -233,6 +253,8 @@ export const useProducts = () => {
     handleCategoryChange,
     selectedColors,
     handleColorChange,
+    selectedRatings,
+    handleRatingChange,
     tempSliderValues,
     handleMouseDown,
     calculatePosition,

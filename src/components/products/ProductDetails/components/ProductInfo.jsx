@@ -1,5 +1,5 @@
 import React from 'react';
-import StarRating from '../../StarRating';
+import RatingStars from '../../RatingStars';
 import ProductTabs from './ProductTabs';
 
 const ProductInfo = ({
@@ -22,19 +22,21 @@ const ProductInfo = ({
       </h1>
 
       <div className="flex items-center mb-4">
-        <StarRating />
-        <span className="ml-2 text-sm text-gray-500">(0 reviews)</span>
+        <RatingStars averageRating={variant.averageRating || 0} />
+        <span className="ml-2 text-sm text-gray-500">
+          ({variant.ratingCount || 0} reviews)
+        </span>
       </div>
 
       <div className="flex gap-2 items-center mb-6">
+        <span className="text-2xl font-semibold">
+          ${variant.discountPrice?.toFixed(2) || variant.price?.toFixed(2)}
+        </span>
         {variant.discountPrice && (
           <span className="ml-2 text-gray-500 line-through">
             ${variant.price?.toFixed(2)}
           </span>
         )}
-        <span className="text-2xl font-semibold">
-          ${variant.discountPrice?.toFixed(2) || variant.price?.toFixed(2)}
-        </span>
       </div>
 
       {/* Variant Selection */}
@@ -163,9 +165,10 @@ const ProductInfo = ({
               : "Out of Stock"}
           </p>
         </div>
+        
         {/* Product Tabs */}
         <div>
-            <ProductTabs product={product} />
+          <ProductTabs product={product} />
         </div>
       </div>
     </div>

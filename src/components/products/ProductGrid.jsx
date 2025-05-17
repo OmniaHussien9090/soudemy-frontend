@@ -1,8 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import StarRating from "./StarRating";
-
-const ProductGrid = ({ hasLoaded, currentVariants, filteredVariants, resetFilters }) => {
+import StarRating from "./RatingStars";
+import RatingStars from "./RatingStars";
+const ProductGrid = ({
+  hasLoaded,
+  currentVariants,
+  filteredVariants,
+  resetFilters,
+}) => {
   if (!hasLoaded) {
     return (
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -36,7 +41,12 @@ const ProductGrid = ({ hasLoaded, currentVariants, filteredVariants, resetFilter
               <h2 className="font-bold font-sans text-lg">
                 {variant.name?.en || "No name"}
               </h2>
-              <StarRating />
+              <div className="flex items-center gap-1">
+                <RatingStars averageRating={variant.averageRating} />
+                <span className="text-gray-500 text-xs">
+                  ({variant.ratingCount})
+                </span>
+              </div>
               <div className="mt-2">
                 <span className="text-gray-600 font-semibold">
                   $
@@ -77,8 +87,8 @@ const ProductGrid = ({ hasLoaded, currentVariants, filteredVariants, resetFilter
         No products found
       </h3>
       <p className="text-gray-500 text-center max-w-md">
-        We couldn't find any products matching your needs. Try adjusting
-        your search criteria.
+        We couldn't find any products matching your needs. Try adjusting your
+        search criteria.
       </p>
       <button
         onClick={resetFilters}

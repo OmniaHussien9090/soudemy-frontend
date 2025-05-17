@@ -28,6 +28,8 @@ const Products = () => {
     setCurrentPage,
     categories,
     colorOptions,
+    selectedRatings,
+    handleRatingChange,
   } = useProducts();
 
   return (
@@ -38,17 +40,17 @@ const Products = () => {
         {hasLoaded && filteredVariants.length > 0 && (
           <div className="flex md:flex-row flex-col md:gap-0 gap-4 justify-between items-center mb-4">
             <div className="text-gray-500 lg:text-lg text-sm ">
-              Showing {currentVariants.length} of {filteredVariants.length} products
+              Showing {currentVariants.length} of {filteredVariants.length}{" "}
+              products
             </div>
-            <SortDropdown 
-              sortOption={sortOption} 
-              setSortOption={setSortOption}
-              setCurrentPage={setCurrentPage}
+            <SortDropdown
+              selectedRatings={selectedRatings}
+              handleRatingChange={handleRatingChange}
             />
           </div>
         )}
 
-        <ProductGrid 
+        <ProductGrid
           hasLoaded={hasLoaded}
           currentVariants={currentVariants}
           filteredVariants={filteredVariants}
@@ -57,7 +59,7 @@ const Products = () => {
 
         {/* Pagination */}
         {hasLoaded && filteredVariants.length > 0 && totalPages > 1 && (
-          <PaginationControls 
+          <PaginationControls
             currentPage={currentPage}
             totalPages={totalPages}
             setCurrentPage={setCurrentPage}
